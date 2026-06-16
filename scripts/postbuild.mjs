@@ -41,7 +41,7 @@
 
 // console.log("[postbuild] dist/index.html ready for static deploy.");
 
-import { existsSync, rmSync, renameSync, readdirSync, cpSync } from "node:fs";
+import { existsSync, rmSync, renameSync, readdirSync, cpSync, readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 
 const dist = "dist";
@@ -53,12 +53,8 @@ if (!existsSync(client)) {
   process.exit(1);
 }
 
-for (const entry of readdirSync(client)) {
-  const from = join(client, entry);
-  const to = join(dist, entry);
-  if (existsSync(to)) rmSync(to, { recursive: true, force: true });
-  renameSync(from, to);
-}
+// Copy everything from dist/client to dist
+cpSync(client, dist, { recursive: true, force: true });
 rmSync(client, { recursive: true, force: true });
 
 const shell = join(dist, "_shell.html");
@@ -70,6 +66,21 @@ if (existsSync(shell)) {
 
 if (existsSync(server)) rmSync(server, { recursive: true, force: true });
 
-cpSync(index, join(dist, "404.html"));
+// Fix asset paths for GitHub Pages
+const basePath = process.env.VITE_BASE_PATH || "";
+if (basePath && basePath !== "/") {
+  console.log(`[postbuild] Applying base path: ${basePath}`);
+  const htmlPath = join(dist, "index.html");
+  let html = readFileSync(htmlPath, "utf-8");
+  
+  html = html.replaceAll('href="/assets/', `href="${basePath}assets/`);
+  html = html.replaceAll('src="/assets/', `src="${basePath}assets/`);
+  
+  writeFileSync(htmlPath, html);
+  console.log("[postbuild] HTML fixed successfully");
+  console.log("[postbuild] Preview:");
+  console.log(html.substring(0, 600));
+}
 
-console.log("[postbuild] dist/index.html ready for static deploy.");
+cpSync(join(dist, "index.html"), join(dist, "404.html"));
+console.log("[postbuild] Done.");

@@ -67,7 +67,7 @@ jobs:
 
       - run: npm run build
         env:
-          VITE_BASE_PATH: /gopa-suseela-portfolio/
+          VITE_BASE_PATH: /gopa-suseela/
 
       - uses: actions/upload-pages-artifact@v3
         with:
