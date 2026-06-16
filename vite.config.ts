@@ -25,6 +25,9 @@ const base = process.env.VITE_BASE_PATH ?? "/";
 
 export default defineConfig({
   base,
+  vite: {
+    base,
+  },
   nitro: false,
   tanstackStart: {
     server: { entry: "server" },
