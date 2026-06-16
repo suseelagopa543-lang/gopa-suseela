@@ -250,7 +250,7 @@ function Skills() {
       icon: Code2,
       title: "Programming",
       color: "oklch(0.546 0.224 263)",
-      items: ["Java", "OOPS Concepts", "Collections Framework", "Stream API", "Multithreading", "JDBC"],
+      items: ["Java", "OOPs Concepts", "Collections Framework", "Stream API", "Multithreading", "JDBC"],
     },
     {
       icon: Server,
@@ -374,7 +374,7 @@ function Projects() {
       desc: "Backend system for venue bookings with user registration, authentication, and role-based authorization. Implemented Spring Security and RESTful APIs with MySQL.",
       features: ["User Authentication", "Role-Based Access Control", "REST API Architecture", "Secure DB Integration"] },
     { title: "Console-Based ATM Interface", time: "August 2025",
-      tech: ["Core Java", "OOP"],
+      tech: ["Core Java", "OOPs"],
       desc: "Command-line banking application supporting balance inquiry, deposits, withdrawals, and mini statements with robust exception handling.",
       features: ["Account Management", "Transaction Processing", "Exception Handling", "OOP Architecture"] },
     { title: "Unified Web Suite", time: "January 2025 – April 2025",
